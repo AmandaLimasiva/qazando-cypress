@@ -1,4 +1,10 @@
+Cypress.on("uncaught:exception", (err, runnable) => {
+  return false;
+});
+
 import { faker } from "@faker-js/faker";
+import "cypress-real-events";
+//import cypress = require("cypress");
 
 //Login com sucesso
 Cypress.Commands.add(
@@ -60,6 +66,7 @@ Cypress.Commands.add(
   }
 );
 
+//Adicionando novo usuário
 Cypress.Commands.add("CadastrarNovoUsuario", () => {
   cy.contains("a", "Cadastro").click("center");
   cy.contains("h3", "Cadastro de usuário").should("be.visible");
@@ -73,12 +80,23 @@ Cypress.Commands.add("CadastrarNovoUsuario", () => {
   cy.get("#user").type(user.name);
   cy.get("#email").type(user.email);
   cy.get("#password").type(user.password);
-
   cy.get("#btnRegister").click();
-
   cy.get(".swal2-popup").should("be.visible");
-
   cy.get(".swal2-popup").find("#swal2-title");
-
   cy.get(".swal2-confirm").click();
 });
+
+//Adicionando produtos ao carrinho
+Cypress.Commands.add("addNovosProdutos", () => {
+  cy.contains("a", "Shop", { timeout: 7000 })
+    .realClick()
+    .then(() => {
+      cy.contains("li", "Product Single").click({ waitForAnimations: false });
+    });
+
+  cy.contains("h3", "Green Dress For Woman").should("be.visible");
+  cy.get("a[class*=btn_sm]").click();
+  cy.get("#swal2-title").should("have.text", "Success!");
+});
+
+
