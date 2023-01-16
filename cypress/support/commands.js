@@ -45,6 +45,7 @@ Cypress.Commands.add(
   }
 );
 
+//Logout
 Cypress.Commands.add(
   "RealizarLogout",
   (
@@ -66,8 +67,8 @@ Cypress.Commands.add(
   }
 );
 
-//Adicionando novo usuário
-Cypress.Commands.add("CadastrarNovoUsuario", () => {
+//Adicionando novo usuário válido
+Cypress.Commands.add("usuarioValido", () => {
   cy.contains("a", "Cadastro").click("center");
   cy.contains("h3", "Cadastro de usuário").should("be.visible");
 
@@ -86,6 +87,63 @@ Cypress.Commands.add("CadastrarNovoUsuario", () => {
   cy.get(".swal2-confirm").click();
 });
 
+//Adicionando novo usuário inválido
+Cypress.Commands.add("usuarioInvalido", () => {
+  cy.contains("a", "Cadastro").click("center");
+  cy.contains("h3", "Cadastro de usuário").should("be.visible");
+
+  const user = {
+    name: "Amanda LS",
+    email: 'amanda.com',
+    password: "pwqwe583",
+  };
+
+  cy.get("#user").type(user.name);
+  cy.get("#email").type(user.email);
+  cy.get("#password").type(user.password);
+  cy.get("#btnRegister").click();
+  cy.get("span[id='errorMessageFirstName']").should('be.visible')
+})
+
+Cypress.Commands.add("senhaInvalida", () => {
+  cy.contains("a", "Cadastro").click("center");
+  cy.contains("h3", "Cadastro de usuário").should("be.visible");
+
+  const user = {
+    name: "Amanda LS",
+    email: faker.internet.email(),
+    password: "12",
+  };
+
+  cy.get("#user").type(user.name);
+  cy.get("#email").type(user.email);
+  cy.get("#password").type(user.password);
+  cy.get("#btnRegister").click();
+  cy.get("span[id='errorMessageFirstName']").should('be.visible')
+})
+
+
+
+//Adicionando usuário já duplicado - O site está com bug
+/*
+Cypress.Commands.add("usuarioDuplicado", () => {
+  cy.contains("a", "Cadastro").click("center");
+  cy.contains("h3", "Cadastro de usuário").should("be.visible");
+
+  const user = {
+    name: "Amanda LS",
+    email: 'amandalimasiva2@gmail.com',
+    password: "pwqwe583",
+  };
+
+  cy.get("#user").type(user.name);
+  cy.get("#email").type(user.email);
+  cy.get("#password").type(user.password);
+  cy.get("#btnRegister").click();
+  //cy.get("span[id='errorMessageFirstName']").should('be.visible')
+})
+*/
+
 //Adicionando produtos ao carrinho
 Cypress.Commands.add("addNovosProdutos", () => {
   cy.contains("a", "Shop", { timeout: 7000 })
@@ -97,6 +155,13 @@ Cypress.Commands.add("addNovosProdutos", () => {
   cy.contains("h3", "Green Dress For Woman").should("be.visible");
   cy.get("a[class*=btn_sm]").click();
   cy.get("#swal2-title").should("have.text", "Success!");
+
 });
 
-
+//Removendo produto do carrinho
+Cypress.Commands.add("removerProdutos", () => {
+  cy.contains(".item-count", "3").click();
+  cy.get(
+    ".offcanvas-cart > :nth-child(1) > .text-right > .offcanvas-wishlist-item-delete > .fa"
+  ).click();
+});

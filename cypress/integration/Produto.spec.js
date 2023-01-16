@@ -1,6 +1,6 @@
 //import cypress = require("cypress");
 
-describe("Adicionando produto no carrinho", () => {
+describe("Carrinho de Compras", () => {
   before(() => {
     cy.visit("/");
     cy.title().should("eq", "QAZANDO Shop E-Commerce");
@@ -8,6 +8,11 @@ describe("Adicionando produto no carrinho", () => {
   });
   it("Adicionado novos produtos ao carrinho", () => {
     cy.addNovosProdutos();
-    //cy.addProdutosDuplicados()
+    cy.RealizarLogout()
   });
+
+  it('Removendo produtos do carrinho', () => {
+    cy.removerProdutos()
+    cy.RealizarLogout()
+  })
 });
