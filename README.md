@@ -35,9 +35,6 @@ cypress-real-events
 <b> Produtos</b>
 1. Adicionar novos produtos ao carrinho
 2. Remover produtos do carrinho  
-3. Duplicar produtos no carrinho
-4. Alterar quantidade de Itens
-5. Favoritar um produto
 
  
   ### 🟡  Links importantes
