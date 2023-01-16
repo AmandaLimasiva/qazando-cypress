@@ -30,6 +30,7 @@ cypress-real-events
 1. Realizar novo cadastro com dados válidos
 2. Realizar novo cadastro com e-mail inválido
 3. Realizar cadastro de um e-mail já existente
+4. Atualizar dados cadastrais
 
 <b> Produtos</b>
 1. Adicionar novos produtos ao carrinho
